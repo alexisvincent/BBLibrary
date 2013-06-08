@@ -2,10 +2,8 @@ package components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,8 +18,8 @@ import javax.swing.Timer;
  */
 public class BSwitch extends JComponent {
 
-    private static final Color backdrop, outlineON, outlineOFF, fontON, fontOFF;
-    private Color outlineAnimation, outline, font;;
+    private static final Color backdropMouseOver, backdropNormal, outlineON, outlineOFF, fontON, fontOFF;
+    private Color outlineAnimation, outline, font, backdrop;
     private static final String textON, textOFF;
     private String text;
     private boolean online, isAnimating;
@@ -29,7 +27,8 @@ public class BSwitch extends JComponent {
     private Thread animation;
 
     static {
-        backdrop = new Color(0, 172, 255, 30);
+        backdropNormal = new Color(0, 172, 255, 30);
+        backdropMouseOver = new Color(0, 172, 255, 60);
         outlineON = new Color(125, 236, 121);
         outlineOFF = new Color(148, 102, 196);
         fontON = outlineON;
@@ -43,6 +42,7 @@ public class BSwitch extends JComponent {
         font = fontOFF;
         outline = outlineOFF;
         text = textOFF;
+        backdrop = backdropNormal;
         reset(); //initiate arc and isAnimating
 
         this.addMouseListener(new MouseAdapter() {
@@ -56,6 +56,20 @@ public class BSwitch extends JComponent {
                 });
                 setOnline.start();
             }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backdrop = backdropMouseOver;
+                repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backdrop = backdropNormal;
+                repaint();
+            }
+            
+            
         });
 
     }
@@ -72,11 +86,11 @@ public class BSwitch extends JComponent {
             outlineAnimation = (online) ? outlineON : outlineOFF;
             font = (online) ? fontON : fontOFF;
             text = (online) ? textON : textOFF;
-            Timer timer = new Timer(1, new ActionListener() {
+            Timer timer = new Timer(5, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if (arc < 360) {
-                        arc++;
+                        arc+=6;
                         repaint();
                         font = new Color(font.getRed(), font.getGreen(), font.getBlue(), arc*255/360);
                     } else {
@@ -96,7 +110,7 @@ public class BSwitch extends JComponent {
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 
-        int cornerRadius = 24;
+        int cornerRadius = 18;
         
         g2d.setStroke(new BasicStroke(4f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
 
@@ -106,7 +120,6 @@ public class BSwitch extends JComponent {
         g2d.setPaint(outline);
         g2d.drawRoundRect(0, 0, this.getWidth() - 1, this.getHeight() - 1, cornerRadius, cornerRadius);
         
-        g2d.setStroke(new BasicStroke(2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
         g2d.setPaint(font);
         g2d.drawString(text, getWidth() / 2 - g2d.getFontMetrics().stringWidth(text) / 2, getHeight() / 2 + g2d.getFontMetrics().getAscent() / 2 - g2d.getFontMetrics().getDescent() / 2);
         
