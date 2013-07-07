@@ -9,8 +9,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Arc2D;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.Timer;
+import listeners.BStateListener;
 
 /**
  *
@@ -25,6 +27,7 @@ public class BSwitch extends JComponent {
     private boolean online, isAnimating;
     private int arc;
     private Thread animation;
+    private ArrayList<BStateListener> listeners;
 
     static {
         backdropNormal = new Color(0, 172, 255, 30);
@@ -44,6 +47,7 @@ public class BSwitch extends JComponent {
         text = textOFF;
         backdrop = backdropNormal;
         reset(); //initiate arc and isAnimating
+        listeners = new ArrayList<>();
 
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -102,8 +106,19 @@ public class BSwitch extends JComponent {
                 }
             });
             timer.start();
+            fireStateChanged(online);
         }
 
+    }
+    
+    public void addStateListener(BStateListener listener) {
+        this.listeners.add(listener);
+    }
+    
+    public void fireStateChanged(boolean state) {
+        for (BStateListener listener : listeners) {
+            listener.stateChanged(state);
+        }
     }
 
     @Override
