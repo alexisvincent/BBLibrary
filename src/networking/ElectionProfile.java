@@ -17,6 +17,10 @@ public class ElectionProfile {
     public ElectionProfile(ArrayList<Server> servers) {
         this.servers = servers;
     }
+    
+    public ElectionProfile(Server server) {
+        this.servers.add(server);
+    }
 
     public ElectionProfile() {
         //Set Defaults for testing

@@ -8,7 +8,7 @@ import org.jdom2.Document;
  */
 public class Request extends Packet {
 
-    String requestType;
+    String requestType = "";
 
     public Request(Document xmlDocument, ASocket socket) {
         super(xmlDocument, socket);

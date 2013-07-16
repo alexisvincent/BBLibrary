@@ -12,7 +12,7 @@ public abstract class Packet {
     Document xmlDocument;
     ASocket socket;
     Element rootElement;
-    String from;
+    String from = "";
 
     public Packet(Document xmlDocument, ASocket socket) {
         this.xmlDocument = xmlDocument;

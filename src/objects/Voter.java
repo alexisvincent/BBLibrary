@@ -5,35 +5,60 @@ package objects;
  * @author alexisvincent
  */
 public class Voter {
-    private int nrID;
-    private int idNumber;
-    private String surname, votersKey, encryptionKeyUN, encryptionKeyGOV;
+    private String idNumber, firstName, middleNames, surname, votersID, encryptionKey;
+    private Address address;
 
     public Voter() {
+        this("", "", "", "", "", "", new Address("", "", "", "", ""));
     }
 
-    public Voter(int nrID, int idNumber, String surname, String votersKey, String encryptionKeyUN, String encryptionKeyGOV) {
-        this.nrID = nrID;
+    public Voter(String idNumber, String firstName, String middleNames, String surname, String votersID, String encryptionKey, Address address) {
         this.idNumber = idNumber;
+        this.firstName = firstName;
+        this.middleNames = middleNames;
         this.surname = surname;
-        this.votersKey = votersKey;
-        this.encryptionKeyUN = encryptionKeyUN;
-        this.encryptionKeyGOV = encryptionKeyGOV;
+        this.votersID = votersID;
+        this.encryptionKey = encryptionKey;
+        this.address = address;
     }
 
-    public int getNrID() {
-        return nrID;
+    public String getVotersID() {
+        return votersID;
     }
 
-    public void setNrID(int nrID) {
-        this.nrID = nrID;
+    public void setVotersID(String votersID) {
+        this.votersID = votersID;
+    }
+    
+    public String getFirstName() {
+        return firstName;
     }
 
-    public int getIdNumber() {
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleNames() {
+        return middleNames;
+    }
+
+    public void setMiddleNames(String middleNames) {
+        this.middleNames = middleNames;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+    
+    public String getIdNumber() {
         return idNumber;
     }
 
-    public void setIdNumber(int idNumber) {
+    public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
     }
 
@@ -45,33 +70,12 @@ public class Voter {
         this.surname = surname;
     }
 
-    public String getVotersKey() {
-        return votersKey;
+    public String getEncryptionKey() {
+        return encryptionKey;
     }
 
-    public void setVotersKey(String votersKey) {
-        this.votersKey = votersKey;
+    public void setEncryptionKey(String encryptionKey) {
+        this.encryptionKey = encryptionKey;
     }
 
-    public String getEncryptionKeyUN() {
-        return encryptionKeyUN;
-    }
-
-    public void setEncryptionKeyUN(String encryptionKeyUN) {
-        this.encryptionKeyUN = encryptionKeyUN;
-    }
-
-    public String getEncryptionKeyGOV() {
-        return encryptionKeyGOV;
-    }
-
-    public void setEncryptionKeyGOV(String encryptionKeyGOV) {
-        this.encryptionKeyGOV = encryptionKeyGOV;
-    }
-
-    @Override
-    public String toString() {
-        return "Voter{" + "nrID=" + nrID + ", idNumber=" + idNumber + ", surname=" + surname + ", votersKey=" + votersKey + ", encryptionKeyUN=" + encryptionKeyUN + ", encryptionKeyGOV=" + encryptionKeyGOV + '}';
-    }
-    
 }
