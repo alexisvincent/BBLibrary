@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jdom2.output.XMLOutputter;
 
 /**
  *
@@ -17,9 +16,9 @@ public class NetworkingClient {
     Server server;
 
     public NetworkingClient(Server server) {
+        setServer(server);
         try {
             socket = new ASocket(new Socket(server.getServerAddress(), server.getServerPort()));
-            socket.setActive(true);
             System.out.println("Successfully connected to Server");
             
         } catch (UnknownHostException ex) {
@@ -35,6 +34,15 @@ public class NetworkingClient {
     }
 
     public ASocket getSocket() {
+        if (socket == null) {
+            try {
+                setSocket(new ASocket(new Socket(server.getServerAddress(), server.getServerPort())));
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(NetworkingClient.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(NetworkingClient.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         return socket;
     }
 

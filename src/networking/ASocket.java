@@ -22,9 +22,7 @@ public class ASocket implements Runnable {
     private boolean active;
     private BufferedReader in = null;
     private PrintStream out = null;
-    
     private SocketAdapter serverResponceListener;
-    
     private Responce responce;
 
     public ASocket(Socket socket) {
@@ -37,25 +35,35 @@ public class ASocket implements Runnable {
             out = new PrintStream(socket.getOutputStream());
         } catch (IOException ex) {
             Logger.getLogger(ASocket.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            setActive(true);
         }
+
     }
 
     public Socket getSocket() {
         return this.socket;
     }
 
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
     public void setActive(boolean active) {
-        this.active = active;
-        if (active) {
-            socketThread.start();
-        } else {
-            try {
-                fireSocketDisconnected(this);
-                socket.close();
-            } catch (IOException ex) {
-                Logger.getLogger(ASocket.class.getName()).log(Level.SEVERE, null, ex);
+        if (this.active != active) {
+            this.active = active;
+            if (active) {
+                socketThread.start();
+            } else {
+                try {
+                    fireSocketDisconnected(this);
+                    socket.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(ASocket.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+
     }
 
     public void write(String text) {
@@ -64,17 +72,15 @@ public class ASocket implements Runnable {
     }
 
     public Responce postRequest(Request request) {
-        
-        setResponce(null);
-        
-        final PacketBuilder packetBuilder = new PacketBuilder();
-        
-        serverResponceListener = new SocketAdapter() { 
 
+        setResponce(null);
+
+        final PacketBuilder packetBuilder = new PacketBuilder();
+
+        serverResponceListener = new SocketAdapter() {
             @Override
             public void socketResponded(final ASocket socket, final String responceString) {
                 Thread t1 = new Thread(new Runnable() {
-
                     @Override
                     public void run() {
                         setResponce(packetBuilder.addResponcePiece(responceString, socket));
@@ -82,21 +88,20 @@ public class ASocket implements Runnable {
                 });
                 t1.start();
             }
-        
         };
-        
+
         this.addSocketListener(serverResponceListener);
-        
+
         String requestString = new XMLOutputter().outputString(request.getXmlDocument().getRootElement());
-        this.write(requestString.length()+" "+requestString);
+        this.write(requestString.length() + " " + requestString);
         System.out.println("Request Posted: " + requestString);
-        
+
         int counter = 0;
-        while (this.responce==null) {
+        while (this.responce == null) {
             try {
                 counter++;
                 Thread.sleep(50);
-                if (counter>=20) {
+                if (counter >= 20) {
                     //Timeout
                     this.removeSocketListener(serverResponceListener);
                     break;
@@ -105,20 +110,20 @@ public class ASocket implements Runnable {
                 Logger.getLogger(ASocket.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         return this.responce;
     }
-    
+
     public void postResponce(Responce responce) {
         String responceString = new XMLOutputter().outputString(responce.getXmlDocument().getRootElement());
-        this.write(responceString.length()+" "+responceString);
+        this.write(responceString.length() + " " + responceString);
         System.out.println("Responce Posted: " + responceString);
     }
-    
+
     private void setResponce(Responce responce) {
         this.responce = responce;
         //method Purely for the responce listener
-        if (responce!=null) {
+        if (responce != null) {
             this.removeSocketListener(serverResponceListener);
         }
     }
@@ -159,7 +164,7 @@ public class ASocket implements Runnable {
                 }
 
             } catch (IOException ex) {
-                Logger.getLogger(ASocket.class.getName()).log(Level.SEVERE, null, ex);
+                setActive(false);
             }
         }
     }
