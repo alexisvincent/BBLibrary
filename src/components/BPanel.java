@@ -8,13 +8,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import javax.swing.JComponent;
 
 /**
  *
  * @author alexisvincent
  */
-public class BPanel extends JComponent {
+public class BPanel extends AComponent {
     
     private static final GradientPaint paint;
     private static final Dimension frameDimensions;
