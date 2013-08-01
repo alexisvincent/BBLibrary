@@ -46,10 +46,8 @@ public class AList extends AComponent {
             }
             
         };
-        scrollPane.getVerticalScrollBar().setUI(new ScrollBarUI() {
-        });
-        scrollPane.getHorizontalScrollBar().setUI(new ScrollBarUI() {
-        });
+        scrollPane.getVerticalScrollBar().setUI(new ScrollBarUI() {});
+        scrollPane.getHorizontalScrollBar().setUI(new ScrollBarUI() {});
 
         this.setDefaultGridbagConstraints();
 

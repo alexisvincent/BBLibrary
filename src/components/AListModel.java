@@ -8,17 +8,16 @@ import java.util.ArrayList;
  * @author alexisvincent
  */
 public class AListModel {
-    
+
     private Insets insets;
     private ArrayList<AListItem> items;
     private AListItem selectedItem;
-
     private ArrayList<ModelUpdatedListener> listeners;
-    
+
     public AListModel() {
         insets = new Insets(6, 8, 2, 8);
         items = new ArrayList<>();
-        
+
         listeners = new ArrayList<>();
     }
 
@@ -36,9 +35,14 @@ public class AListModel {
     }
 
     public void setSelectedItem(AListItem selectedItem) {
-        for (AListItem aListItem : items) {
-            if (selectedItem.equals(this.selectedItem)) {
-                this.selectedItem = selectedItem;
+        for (AListItem aListItem : getItems()) {
+            aListItem.setSelected(false);
+        }
+        
+        for (AListItem aListItem : getItems()) {
+            if (selectedItem.getDisplayName().equals(aListItem.getDisplayName())) {
+                aListItem.setSelected(true);
+                break;
             }
         }
         fireModelUpdatedListeners();
@@ -49,28 +53,30 @@ public class AListModel {
     }
 
     public void setItems(ArrayList<AListItem> items) {
-        this.items = items;
+        getItems().clear();
+        for (AListItem item : items) {
+            getItems().add(new AListItem(item.getDisplayName()));
+        }
         fireModelUpdatedListeners();
     }
-    
+
     public void addModelUpdatedListener(ModelUpdatedListener listener) {
         this.listeners.add(listener);
     }
-    
+
     public void removeModelUpdatedListener(ModelUpdatedListener listener) {
         this.listeners.remove(listener);
     }
-    
+
     private void fireModelUpdatedListeners() {
         for (ModelUpdatedListener listener : listeners) {
             listener.modelUpdated();
         }
     }
-    
+
     public static abstract class ModelUpdatedListener {
 
         public void modelUpdated() {
         }
     }
-    
 }
