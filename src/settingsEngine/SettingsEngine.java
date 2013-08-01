@@ -23,9 +23,8 @@ public class SettingsEngine {
     public SettingsEngine() {
         File settingsFile = new File("blueballot.conf");
         preferences = new Element("Preferences");
-        preferences.setAttribute("RegistrationServerAddress", "localhost");
-        preferences.setAttribute("RegistrationServerName", "RegistrationServer");
-        preferences.setAttribute("RegistrationServerPort", "12345");
+        preferences.setAttribute("ServerAddress", "localhost");
+        preferences.setAttribute("ServerPort", "12345");
         try {
             if (settingsFile.exists()) {
                 System.out.println("Using existing preferences");
@@ -46,9 +45,9 @@ public class SettingsEngine {
         SettingsEngine settingsEngine = new SettingsEngine();
     }
 
-    public Server getRegistrationServer() {
-        return new Server(preferences.getAttributeValue("RegistrationServerName"), 
-                preferences.getAttributeValue("RegistrationServerAddress"), 
-                Integer.parseInt(preferences.getAttributeValue("RegistrationServerPort")));
+    public Server getServer() {
+        return new Server(preferences.getAttributeValue("ServerName"), 
+                preferences.getAttributeValue("ServerAddress"), 
+                Integer.parseInt(preferences.getAttributeValue("ServerPort")));
     }
 }

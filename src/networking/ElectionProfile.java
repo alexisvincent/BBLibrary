@@ -1,6 +1,5 @@
 package networking;
 
-import java.util.ArrayList;
 
 /**
  *
@@ -8,40 +7,22 @@ import java.util.ArrayList;
  */
 public class ElectionProfile {
     
-    private static ArrayList<Server> servers;
-    
-    static {
-        servers = new ArrayList<>();
-    }
-
-    public ElectionProfile(ArrayList<Server> servers) {
-        this.servers = servers;
-    }
+    private static Server server;
     
     public ElectionProfile(Server server) {
-        this.servers.add(server);
-    }
-
-    public ElectionProfile() {
-        //Set Defaults for testing
-        servers.add(new Server("RegistrationServer", "blueballot.hopto.org", 12345));
-    }
-
-    public ArrayList<Server> getServers() {
-        return servers;
-    }
-
-    public void setServers(ArrayList<Server> servers) {
-        this.servers = servers;
+        this.server = server;
     }
     
-    public Server getServer(String serverName) {
-        Server server = null;
-        for (Server s : getServers()) {
-            if (s.getServerName().equals(serverName)) {
-                server = s;
-            }
-        }
+    public ElectionProfile() {
+        //Set Defaults for testing
+        server = new Server("Default", "blueballot.hopto.org", 12345);
+    }
+
+    public void setServer(Server servers) {
+        this.server = server;
+    }
+    
+    public Server getServer() {
         return server;
     }
 }

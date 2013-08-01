@@ -16,11 +16,9 @@ import java.awt.RenderingHints;
 public class BPanel extends AComponent {
     
     private static final GradientPaint paint;
-    private static final Dimension frameDimensions;
     
     static {
         paint = new GradientPaint(new Point(400,400), Color.BLACK, new Point(0,0), new Color(70,70,70));
-        frameDimensions = new Dimension(400,400);
     }
     
     @Override
@@ -30,7 +28,7 @@ public class BPanel extends AComponent {
         g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setPaint(paint);
-        g2d.fillRoundRect(0, 0, frameDimensions.width, frameDimensions.height, 15, 15);
+        g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
 
     }
     
