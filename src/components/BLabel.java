@@ -12,10 +12,8 @@ import javax.swing.JComponent;
  */
 public class BLabel extends JComponent {
     
-    private String name;
-
     public BLabel(String name) {
-        this.name = name;
+        setName(name);
     }
 
     @Override
@@ -25,7 +23,7 @@ public class BLabel extends JComponent {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         
         g2d.setPaint(Color.WHITE);
-        g2d.drawString(name, 0, getHeight()/2+g2d.getFontMetrics().getAscent()/2-g2d.getFontMetrics().getDescent()/2);
+        g2d.drawString(getName(), 0, getHeight()/2+g2d.getFontMetrics().getAscent()/2-g2d.getFontMetrics().getDescent()/2);
     }
 
     

@@ -7,7 +7,6 @@ package networking;
 public class Server {
 
     private String serverName;
-    private String serverDiscription;
     private String serverAddress;
     private int serverPort;
 
@@ -23,14 +22,6 @@ public class Server {
 
     public void setServerName(String serverName) {
         this.serverName = serverName;
-    }
-
-    public String getServerDiscription() {
-        return serverDiscription;
-    }
-
-    public void setServerDiscription(String serverDiscription) {
-        this.serverDiscription = serverDiscription;
     }
 
     public String getServerAddress() {

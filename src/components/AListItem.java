@@ -40,10 +40,10 @@ public class AListItem extends AComponent {
         setDisplayName(displayName);
         this.setPreferredSize(new Dimension(0, 30));
 
-        displayNamePaint = new Color(53, 53, 123);
+        displayNamePaint = new Color(22, 45, 67);
         backgroundPaint = new Color(53, 123, 123);
-        selectedPaint = new Color(123, 234, 56);
-        focusPaint = new Color(20, 234, 56);
+        selectedPaint = new Color(244, 123, 56);
+        focusPaint = new Color(244, 123, 123);
 
         selectionListeners = new ArrayList<>();
         focusListeners = new ArrayList<>();
