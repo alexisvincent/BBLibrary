@@ -49,13 +49,13 @@ public class BToolkit {
      * @param password <i>A password character array.</i>    
      * @return A concatenated String containing the password.    
      */
-    public static String getPass(char password[]) {
+    public static String getPass(char charPassword[]) {
         //generate the password
-        String pass = "";
-        for (int i = 0; i < password.length; i++) {
-            pass += "" + password[i];
+        String stringPassword = "";
+        for (char c : charPassword) {
+            stringPassword += c;
         }
-        return pass;
+        return stringPassword;
     }
 
     public static Image getImage(String resource) {
