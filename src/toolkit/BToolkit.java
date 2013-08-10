@@ -39,10 +39,6 @@ public class BToolkit {
 
     }
 
-    public static AlphaComposite makeComposite(float alpha) {
-        return (AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha / 255));
-    }
-
     /**
      * Concatenates a String by parsing through a password character array.
      *

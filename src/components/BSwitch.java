@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.Timer;
 import listeners.BStateListener;
+import toolkit.UIToolkit;
 
 /**
  *
@@ -123,7 +124,7 @@ public class BSwitch extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
 
         int cornerRadius = 18;
         

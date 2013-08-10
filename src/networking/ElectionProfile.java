@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.XMLOutputter;
@@ -57,6 +59,17 @@ public class ElectionProfile {
         }
     }
 
+    public void deleteFile() {
+        System.out.println("Attempted Delete");
+        if (getFile().exists()) {
+            try {
+                deleteFile(getFile().getParentFile());
+            } catch (IOException ex) {
+                Logger.getLogger(ElectionProfile.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public Element getProfileElement() {
         Element element = new Element("ElectionProfile");
 
@@ -77,6 +90,46 @@ public class ElectionProfile {
             getServer().setServerPort(Integer.parseInt(profileFile.getAttributeValue("ServerPort")));
         } catch (Exception e) {
             System.out.println("Invalid Profile Element");
+        }
+    }
+
+    public static void deleteFile(File file)
+            throws IOException {
+
+        if (file.isDirectory()) {
+
+            //directory is empty, then delete it
+            if (file.list().length == 0) {
+
+                file.delete();
+                System.out.println("Directory is deleted : "
+                        + file.getAbsolutePath());
+
+            } else {
+
+                //list all the directory contents
+                String files[] = file.list();
+
+                for (String temp : files) {
+                    //construct the file structure
+                    File fileDelete = new File(file, temp);
+
+                    //recursive delete
+                    deleteFile(fileDelete);
+                }
+
+                //check the directory again, if empty then delete it
+                if (file.list().length == 0) {
+                    file.delete();
+                    System.out.println("Directory is deleted : "
+                            + file.getAbsolutePath());
+                }
+            }
+
+        } else {
+            //if file, then delete it
+            file.delete();
+            System.out.println("File is deleted : " + file.getAbsolutePath());
         }
     }
 

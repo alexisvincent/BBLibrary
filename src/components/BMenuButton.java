@@ -2,8 +2,10 @@ package components;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.JComponent;
+import toolkit.UIToolkit;
 
 /**
  *
@@ -37,7 +39,8 @@ public class BMenuButton extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        g.drawImage(imgDisplay, 0, 0, (int)imgDimensions.getWidth(), (int)imgDimensions.getHeight(), this);
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
+        g2d.drawImage(imgDisplay, 0, 0, (int)imgDimensions.getWidth(), (int)imgDimensions.getHeight(), this);
     }
 
 }

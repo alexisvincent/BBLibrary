@@ -1,7 +1,11 @@
 package components;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.util.ArrayList;
+import toolkit.UIToolkit;
 
 /**
  *
@@ -13,12 +17,31 @@ public class AListModel {
     private ArrayList<AListItem> items;
     private ArrayList<ModelUpdatedListener> modelUpdatedListeners;
     private ArrayList<SelectionListener> selectionListeners;
+    private AComponent itemsPane;
 
     public AListModel() {
         insets = new Insets(6, 8, 2, 8);
         items = new ArrayList<>();
         modelUpdatedListeners = new ArrayList<>();
         selectionListeners = new ArrayList<>();
+        itemsPane = new AComponent() {
+
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
+                g2d.setPaint(new Color(23, 23, 23, 100));
+                g2d.fillRoundRect(0, 0, this.getWidth()-1, this.getHeight()-1, 15, 15);
+            }
+            
+        };
+    }
+
+    public AComponent getItemsPane() {
+        return itemsPane;
+    }
+
+    public void setItemsPane(AComponent itemsPane) {
+        this.itemsPane = itemsPane;
     }
 
     public Insets getInsets() {

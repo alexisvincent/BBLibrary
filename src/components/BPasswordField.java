@@ -3,6 +3,7 @@ package components;
 import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.JPasswordField;
+import toolkit.UIToolkit;
 
 /**
  *
@@ -27,8 +28,7 @@ public class BPasswordField extends JPasswordField {
     
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D)g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
         g2d.setPaint(backdrop);
         g2d.fillRoundRect(0, 0, getWidth(), getHeight(),8,8);
         g2d.setPaint(outline);

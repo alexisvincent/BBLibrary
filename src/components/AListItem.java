@@ -15,6 +15,8 @@ import java.awt.Paint;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import toolkit.ResourceManager;
+import toolkit.UIToolkit;
 
 /**
  *
@@ -23,10 +25,15 @@ import java.util.ArrayList;
 public class AListItem extends AComponent {
 
     private String displayName;
-    private Paint backgroundPaint;
-    private Paint displayNamePaint;
-    private Paint selectedPaint;
-    private Paint focusPaint;
+    private Paint normalBackgroundPaint;
+    private Paint normalBorderPaint;
+    private Paint normalDisplayNamePaint;
+    private Paint focusBackgroundPaint;
+    private Paint focusBorderPaint;
+    private Paint focusDisplayNamePaint;
+    private Paint selectedBackgroundPaint;
+    private Paint selectedBorderPaint;
+    private Paint selectedDisplayNamePaint;
     private boolean focus;
     private boolean selected;
     private ArrayList<SelectionListener> selectionListeners;
@@ -40,14 +47,9 @@ public class AListItem extends AComponent {
         setDisplayName(displayName);
         this.setPreferredSize(new Dimension(0, 30));
 
-        displayNamePaint = new Color(22, 45, 67);
-        backgroundPaint = new Color(53, 123, 123);
-        selectedPaint = new Color(244, 123, 56);
-        focusPaint = new Color(244, 123, 123);
-
         selectionListeners = new ArrayList<>();
         focusListeners = new ArrayList<>();
-        
+
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseReleased(MouseEvent e) {
@@ -65,25 +67,101 @@ public class AListItem extends AComponent {
             public void mouseExited(MouseEvent e) {
                 setFocus(false);
             }
-            
         });
-        
+
+        normalBackgroundPaint = AColor.fancyLightBlue;
+        normalBorderPaint = AColor.fancyLightBlue;
+        normalDisplayNamePaint = AColor.WHITE;
+        focusBackgroundPaint = AColor.fancyLightBlue;
+        focusBorderPaint = AColor.fancyGreen;
+        focusDisplayNamePaint = AColor.WHITE;
+        selectedBackgroundPaint = AColor.fancyLightBlue;
+        selectedBorderPaint = AColor.WHITE;
+        selectedDisplayNamePaint = AColor.WHITE;
     }
 
-    public Paint getBackgroundPaint() {
-        return backgroundPaint;
+    public Paint getNormalBackgroundPaint() {
+        return normalBackgroundPaint;
     }
 
-    public void setBackgroundPaint(Paint backgroundPaint) {
-        this.backgroundPaint = backgroundPaint;
+    public void setNormalBackgroundPaint(Paint normalBackgroundPaint) {
+        this.normalBackgroundPaint = normalBackgroundPaint;
     }
 
-    public Paint getDisplayNamePaint() {
-        return displayNamePaint;
+    public Paint getNormalBorderPaint() {
+        return normalBorderPaint;
     }
 
-    public void setDisplayNamePaint(Paint displayNamePaint) {
-        this.displayNamePaint = displayNamePaint;
+    public void setNormalBorderPaint(Paint normalBorderPaint) {
+        this.normalBorderPaint = normalBorderPaint;
+    }
+
+    public Paint getNormalDisplayNamePaint() {
+        return normalDisplayNamePaint;
+    }
+
+    public void setNormalDisplayNamePaint(Paint normalDisplayNamePaint) {
+        this.normalDisplayNamePaint = normalDisplayNamePaint;
+    }
+
+    public Paint getFocusBackgroundPaint() {
+        return focusBackgroundPaint;
+    }
+
+    public void setFocusBackgroundPaint(Paint focusBackgroundPaint) {
+        this.focusBackgroundPaint = focusBackgroundPaint;
+    }
+
+    public Paint getFocusBorderPaint() {
+        return focusBorderPaint;
+    }
+
+    public void setFocusBorderPaint(Paint focusBorderPaint) {
+        this.focusBorderPaint = focusBorderPaint;
+    }
+
+    public Paint getFocusDisplayNamePaint() {
+        return focusDisplayNamePaint;
+    }
+
+    public void setFocusDisplayNamePaint(Paint focusDisplayNamePaint) {
+        this.focusDisplayNamePaint = focusDisplayNamePaint;
+    }
+
+    public Paint getSelectedBackgroundPaint() {
+        return selectedBackgroundPaint;
+    }
+
+    public void setSelectedBackgroundPaint(Paint selectedBackgroundPaint) {
+        this.selectedBackgroundPaint = selectedBackgroundPaint;
+    }
+
+    public Paint getSelectedBorderPaint() {
+        return selectedBorderPaint;
+    }
+
+    public void setSelectedBorderPaint(Paint selectedBorderPaint) {
+        this.selectedBorderPaint = selectedBorderPaint;
+    }
+
+    public Paint getSelectedDisplayNamePaint() {
+        return selectedDisplayNamePaint;
+    }
+
+    public void setSelectedDisplayNamePaint(Paint selectedDisplayNamePaint) {
+        this.selectedDisplayNamePaint = selectedDisplayNamePaint;
+    }
+
+    public ArrayList<SelectionListener> getSelectionListeners() {
+        return selectionListeners;
+    }
+
+    public void setSelectionListeners(ArrayList<SelectionListener> selectionListeners) {
+        this.selectionListeners = selectionListeners;
+    }
+
+    public void setFocusListeners(ArrayList<FocusListener> focusListeners) {
+        this.focusListeners = focusListeners;
     }
 
     public boolean isFocus() {
@@ -131,7 +209,7 @@ public class AListItem extends AComponent {
             listener.itemSelected(this);
         }
     }
-    
+
     public void addFocusListener(FocusListener listener) {
         focusListeners.add(listener);
     }
@@ -148,17 +226,29 @@ public class AListItem extends AComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
         g2d.setStroke(new BasicStroke(2f));
-        g2d.setPaint(backgroundPaint);
-        if (isFocus()) {
-            g2d.setPaint(focusPaint);
-        } else if (isSelected()) {
-            g2d.setPaint(selectedPaint);
+        g2d.setFont(ResourceManager.getFont("Sax Mono", 13));
+        g2d.setPaint(normalBackgroundPaint);
+        if (isSelected()) {
+            g2d.setPaint(selectedBackgroundPaint);
+        } else if (isFocus()) {
+            g2d.setPaint(focusBackgroundPaint);
         }
         g2d.fillRoundRect(0, 0, this.getWidth() - 1, this.getHeight() - 1, 15, 15);
-        g2d.setPaint(displayNamePaint);
+        g2d.setPaint(normalBorderPaint);
+        if (isFocus()) {
+            g2d.setPaint(focusBorderPaint);
+        } else if (isSelected()) {
+            g2d.setPaint(selectedBorderPaint);
+        }
         g2d.drawRoundRect(0, 0, this.getWidth() - 1, this.getHeight() - 1, 15, 15);
+        g2d.setPaint(normalDisplayNamePaint);
+        if (isSelected()) {
+            g2d.setPaint(selectedDisplayNamePaint);
+        } else if (isFocus()) {
+            g2d.setPaint(focusDisplayNamePaint);
+        }
         g2d.drawString(getDisplayName(), 15, 20);
     }
 }

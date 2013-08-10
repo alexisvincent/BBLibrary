@@ -5,6 +5,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextPane;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.StyleConstants;
+import toolkit.UIToolkit;
 
 /**
  *
@@ -35,9 +36,7 @@ public class BTextPane extends JTextPane {
 
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
         g2d.setPaint(backdrop);
         g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 8, 8);
         g2d.setPaint(outline);

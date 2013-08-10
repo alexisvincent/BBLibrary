@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.BorderFactory;
 import javax.swing.JFormattedTextField;
 import javax.swing.text.MaskFormatter;
+import toolkit.UIToolkit;
 
 /**
  * @about Oh how wonderful it is to be a BFormattedTextField...
@@ -34,8 +35,7 @@ public class BFormattedTextField extends JFormattedTextField{
     
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D)g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
         g2d.setPaint(backdrop);
         g2d.fillRoundRect(0, 0, getWidth(), getHeight(),8,8);
         g2d.setPaint(outline);

@@ -6,6 +6,7 @@ package components;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import toolkit.BToolkit;
+import toolkit.UIToolkit;
 
 /**
  *
@@ -87,7 +89,8 @@ public class BLockButton extends JComponent {
     //paint component
     @Override
     public void paintComponent(Graphics g) {
-        g.drawImage(display, 0, 2, display.getWidth(this), display.getHeight(this), this);
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
+        g2d.drawImage(display, 0, 2, display.getWidth(this), display.getHeight(this), this);
 
     }
 }

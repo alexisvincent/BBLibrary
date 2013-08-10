@@ -35,6 +35,14 @@ public class ProfileEngine {
     }
     
     public ElectionProfile getFirstProfile() {
+        if (electionProfiles.isEmpty()) {
+            String electionName = "DummyElection";
+            Server server = new Server("DummyServer", "localhost", 12345);
+            File electionFile = new File(electionName+"/blueballot.conf");
+            ElectionProfile dummyProfile = new ElectionProfile(electionName, server, electionFile);
+            dummyProfile.updateFile();
+            updateProfileList();
+        }
         return electionProfiles.get(0);
     }
 
@@ -61,6 +69,8 @@ public class ProfileEngine {
             }
         };
 
+        electionProfiles.clear();
+        
         for (File file : currentDirectory.listFiles(directoryFilter)) {
             for (File subFile : file.listFiles(fileFilter)) {
                 if (subFile.getName().equals("blueballot.conf")) {

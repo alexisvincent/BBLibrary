@@ -17,7 +17,7 @@ public class Candidate {
     private String info;
     private Image image;
     private int tally;
-    private int percentage;
+    private double percentage;
 
     public Candidate() {
         this("", "", "", null);
@@ -27,7 +27,7 @@ public class Candidate {
         this(id, name, info, image, 0, 0);
     }
 
-    public Candidate(String id, String name, String info, Image image, int tally, int percentage) {
+    public Candidate(String id, String name, String info, Image image, int tally, double percentage) {
         this.id = id;
         this.name = name;
         this.info = info;
@@ -76,11 +76,11 @@ public class Candidate {
         this.tally = tally;
     }
 
-    public int getPercentage() {
+    public double getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(int percentage) {
+    public void setPercentage(double percentage) {
         this.percentage = percentage;
     }
 }

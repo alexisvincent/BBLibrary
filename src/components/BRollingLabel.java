@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComponent;
+import toolkit.UIToolkit;
 
 /**
  * @about rolling label... should really look at making a more elegant solution
@@ -52,9 +53,7 @@ public class BRollingLabel extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        Graphics2D g2d = UIToolkit.getPrettyGraphics(g);
         g2d.setPaint(Color.WHITE);
 
         if (center == null) {
