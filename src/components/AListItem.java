@@ -73,7 +73,7 @@ public class AListItem extends AComponent {
         normalBorderPaint = AColor.fancyLightBlue;
         normalDisplayNamePaint = AColor.WHITE;
         focusBackgroundPaint = AColor.fancyLightBlue;
-        focusBorderPaint = AColor.fancyGreen;
+        focusBorderPaint = AColor.fancyDarkGreen;
         focusDisplayNamePaint = AColor.WHITE;
         selectedBackgroundPaint = AColor.fancyLightBlue;
         selectedBorderPaint = AColor.WHITE;

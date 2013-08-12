@@ -33,8 +33,8 @@ public class BSwitch extends JComponent {
     static {
         backdropNormal = new Color(0, 172, 255, 30);
         backdropMouseOver = new Color(0, 172, 255, 60);
-        outlineON = new Color(125, 236, 121);
-        outlineOFF = new Color(148, 102, 196);
+        outlineON = AColor.fancyDarkGreen;
+        outlineOFF = AColor.fancyDarkBlue;
         fontON = outlineON;
         fontOFF = outlineOFF;
         textON = "ONLINE";

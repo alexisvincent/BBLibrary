@@ -19,6 +19,8 @@ public class BButton extends JComponent {
     private Color outline, backdrop, font;
     private static final Color outlineMouseOver, outlineNormal, backdropNormal, backdropMouseOver, fontNormal, fontMouseOver;
     private String name;
+    private boolean focus;
+    private boolean selected;
 
     static {
         backdropNormal = new Color(40, 40, 40, 100);
@@ -41,6 +43,7 @@ public class BButton extends JComponent {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
+                focus = true;
                 outline = outlineMouseOver;
                 backdrop = backdropMouseOver;
                 font = fontMouseOver;
@@ -49,12 +52,29 @@ public class BButton extends JComponent {
 
             @Override
             public void mouseExited(MouseEvent e) {
+                focus = false;
                 outline = outlineNormal;
                 backdrop = backdropNormal;
                 font = fontNormal;
                 repaint();
             }
         });
+    }
+
+    public boolean isFocus() {
+        return focus;
+    }
+
+    public void setFocus(boolean focus) {
+        this.focus = focus;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     @Override

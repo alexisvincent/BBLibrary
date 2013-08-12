@@ -9,12 +9,14 @@ import java.awt.color.ColorSpace;
  */
 public class AColor extends Color {
     
-    public static Color fancyLightBlue, fancyDarkBlue, fancyGreen;
+    public static Color fancyLightBlue, fancyDarkBlue, fancyDarkGreen, fancyLightGreen, fancyDarkGrey;
     
     static {
         fancyLightBlue = new Color(0,172,255,30);
         fancyDarkBlue = new Color(0,172,255,230);
-        fancyGreen = new Color(20, 200, 112, 255);
+        fancyLightGreen = new Color(20, 200, 112, 60);
+        fancyDarkGreen = new Color(20, 200, 112, 255);
+        fancyDarkGrey = new Color(34, 34, 34, 255);
     }
 
     public AColor(int r, int g, int b) {

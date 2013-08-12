@@ -1,10 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package objects;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import toolkit.BToolkit;
 
 /**
  *
@@ -15,23 +15,38 @@ public class Candidate {
     private String id;
     private String name;
     private String info;
-    private Image image;
+    
+    private String encodedImage;
     private int tally;
     private double percentage;
 
     public Candidate() {
-        this("", "", "", null);
+        this("", "", "", "");
     }
 
-    public Candidate(String id, String name, String info, Image image) {
+    public Candidate(String id, String name, String info, BufferedImage image) {
+        this(id, name, info, image, 0, 0);
+    }
+    
+    public Candidate(String id, String name, String info, String image) {
         this(id, name, info, image, 0, 0);
     }
 
-    public Candidate(String id, String name, String info, Image image, int tally, double percentage) {
+    public Candidate(String id, String name, String info, BufferedImage image, int tally, double percentage) {
         this.id = id;
         this.name = name;
         this.info = info;
-        this.image = image;
+        this.tally = tally;
+        this.percentage = percentage;
+        
+        setImage(image);
+    }
+    
+    public Candidate(String id, String name, String info, String image, int tally, double percentage) {
+        this.id = id;
+        this.name = name;
+        this.info = info;
+        this.encodedImage = image;
         this.tally = tally;
         this.percentage = percentage;
     }
@@ -60,12 +75,26 @@ public class Candidate {
         this.info = info;
     }
 
-    public Image getImage() {
-        return image;
+    public BufferedImage getImage() {
+        
+        try {
+            return BToolkit.decodeImage(encodedImage);
+        } catch (IOException ex) {
+            Logger.getLogger(Candidate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    public String getEncodedImage() {
+        return encodedImage;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setEncodedImage(String encodedImage) {
+        this.encodedImage = encodedImage;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.encodedImage = BToolkit.encodeImage(image);
     }
 
     public int getTally() {

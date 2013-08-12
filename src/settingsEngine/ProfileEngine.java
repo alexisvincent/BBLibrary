@@ -1,7 +1,6 @@
 package settingsEngine;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import networking.ElectionProfile;
@@ -24,25 +23,9 @@ public class ProfileEngine {
 
         updateProfileList();
 
-        if (electionProfiles.isEmpty()) {
-            String electionName = "DummyElection";
-            Server server = new Server("DummyServer", "localhost", 12345);
-            File electionFile = new File(electionName+"/blueballot.conf");
-            ElectionProfile dummyProfile = new ElectionProfile(electionName, server, electionFile);
-            dummyProfile.updateFile();
-            updateProfileList();
-        }
     }
-    
+
     public ElectionProfile getFirstProfile() {
-        if (electionProfiles.isEmpty()) {
-            String electionName = "DummyElection";
-            Server server = new Server("DummyServer", "localhost", 12345);
-            File electionFile = new File(electionName+"/blueballot.conf");
-            ElectionProfile dummyProfile = new ElectionProfile(electionName, server, electionFile);
-            dummyProfile.updateFile();
-            updateProfileList();
-        }
         return electionProfiles.get(0);
     }
 
@@ -57,32 +40,27 @@ public class ProfileEngine {
     public void updateProfileList() {
         File currentDirectory = new File(".");
 
-        FileFilter directoryFilter = new FileFilter() {
-            public boolean accept(File f) {
-                return f.isDirectory();
-            }
-        };
-
-        FileFilter fileFilter = new FileFilter() {
-            public boolean accept(File f) {
-                return f.isFile();
-            }
-        };
-
         electionProfiles.clear();
-        
-        for (File file : currentDirectory.listFiles(directoryFilter)) {
-            for (File subFile : file.listFiles(fileFilter)) {
-                if (subFile.getName().equals("blueballot.conf")) {
-                    try {
-                        Element profileElement = new SAXBuilder().build(subFile).getRootElement();
-                        ElectionProfile profile = new ElectionProfile(profileElement, subFile);
-                        electionProfiles.add(profile);
-                    } catch (JDOMException | IOException ex) {
-                        System.out.println("Bad profile file found");
-                    }
+
+        for (File file : currentDirectory.listFiles()) {
+            if (file.getName().contains(".blueballot")) {
+                try {
+                    Element profileElement = new SAXBuilder().build(file).getRootElement();
+                    ElectionProfile profile = new ElectionProfile(profileElement, file);
+                    electionProfiles.add(profile);
+                } catch (JDOMException | IOException ex) {
+                    System.out.println("Bad profile file found");
                 }
             }
+        }
+
+        if (electionProfiles.isEmpty()) {
+            String electionName = "DummyElection";
+            Server server = new Server("DummyServer", "localhost", 12345);
+            File electionFile = new File(electionName + ".blueballot");
+            ElectionProfile dummyProfile = new ElectionProfile(electionName, server, electionFile);
+            dummyProfile.updateFile();
+            updateProfileList();
         }
     }
 }

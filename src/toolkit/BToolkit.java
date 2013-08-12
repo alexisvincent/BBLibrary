@@ -4,12 +4,27 @@
  */
 package toolkit;
 
+import components.AComponent;
+import components.BFormattedTextField;
+import components.BTextArea;
+import components.BTextField;
 import java.awt.AlphaComposite;
+import java.awt.Component;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -92,5 +107,34 @@ public class BToolkit {
 
         }
         return image;
+    }
+
+    public static String encodeImage(BufferedImage bufferedImage) {
+        byte[] byteImage = ((DataBufferByte) (bufferedImage.getRaster().getDataBuffer())).getData();
+        return new String(Base64.encodeBase64(byteImage));
+    }
+
+    public static BufferedImage decodeImage(String encodedImage) throws IOException {
+        byte[] byteImage = Base64.decodeBase64(encodedImage);
+        return ImageIO.read(new ByteArrayInputStream(byteImage));
+    }
+
+    public static boolean checkComponentCompletion(JComponent component) {
+
+        for (Component child : component.getComponents()) {
+            if (child instanceof JTextField && ((JTextField) child).getText().equals("")) {
+                return false;
+            } else if (child instanceof JTextArea && ((JTextArea) child).getText().equals("")) {
+                return false;
+            } else if (child instanceof JFormattedTextField) {
+                for (char character : ((JFormattedTextField) child).getText().toCharArray()) {
+                    if (character == ' ') {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }
